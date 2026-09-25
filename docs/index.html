@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="pageTitle">Locuri de muncÄƒ â€” peviitor.ro</title>
+  <title data-i18n="pageTitle">Locuri de muncă — peviitor.ro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#eceef1;--ink-dim:#9a9fac;--ink-faint:#5c616e;--bg:#0a0a0d;--surface:#131317;--surface2:#1a1a20;--border:#2a2a32;--red:#e0122a;--good:#2fd66a;}
+    :root{--ink:#eceef1;--ink-dim:#9a9fac;--ink-faint:#868b98;--bg:#0a0a0d;--surface:#131317;--surface2:#1a1a20;--border:#2a2a32;--red:#e0122a;--good:#2fd66a;}
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'JetBrains Mono', monospace;
@@ -271,7 +271,27 @@
       .stats { grid-template-columns: 1fr; }
       .company-grid, .tests-grid { grid-template-columns: 1fr; }
     }
-  </style>
+  
+/* ---------- accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
+}
+a:focus-visible, button:focus-visible, .action:focus-visible, .test-card:focus-visible,
+.company-item a:focus-visible, .lang-toggle button:focus-visible {
+  outline: 2px solid var(--red, #e0122a);
+  outline-offset: 2px;
+  position: relative;
+  z-index: 1;
+  border-radius: 2px;
+}
+.skip-link {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--red, #e0122a); color: #fff;
+  padding: .6rem 1rem; z-index: 10; font-family: var(--font-mono, monospace);
+  font-size: .8rem; text-decoration: none;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+</style>
 </head>
 <body>
 <div class="container">
@@ -284,8 +304,8 @@
     <a href="https://peviitor.ro" target="_blank" class="logo-link">
       <img src="https://peviitor.ro/assets/logo-DV2JQkir.svg" alt="peviitor" class="logo-img">
     </a>
-    <h1 data-i18n="pageTitle">Locuri de muncÄƒ</h1>
-    <p data-i18n="subtitle">Scraper automat pentru locurile de muncÄƒ MEJIX</p>
+    <h1 data-i18n="pageTitle">Locuri de muncă</h1>
+    <p data-i18n="subtitle">Scraper automat pentru locurile de muncă MEJIX</p>
 
     <div style="margin: 15px 0; display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
       <a href="https://github.com/TheTatu13/mejix-srl-nodejs-scraper/actions/workflows/job-seeker-ro-spider.yml" target="_blank">
@@ -318,16 +338,16 @@
     <div class="card-body">
       <div class="stats" id="statsContainer">
         <div class="stat">
-          <div class="stat-value" id="jobsCount">â€”</div>
+          <div class="stat-value" id="jobsCount">—</div>
           <div class="stat-label" data-i18n="jobsLabel">Job-uri</div>
         </div>
         <div class="stat">
-          <div class="stat-value" id="verifiedCount">â€”</div>
+          <div class="stat-value" id="verifiedCount">—</div>
           <div class="stat-label" data-i18n="verifiedLabel">Verificate</div>
         </div>
         <div class="stat stat-time">
-          <div class="stat-value" id="lastRunTime">â€”</div>
-          <div class="stat-label" id="lastRunDate">â€”</div>
+          <div class="stat-value" id="lastRunTime">—</div>
+          <div class="stat-label" id="lastRunDate">—</div>
         </div>
       </div>
     </div>
@@ -338,10 +358,10 @@
     <div class="card-body">
       <ul class="features-list" data-i18n="featuresList">
         <li data-i18n="f1">Extrage job-uri de pe MEJIX</li>
-        <li data-i18n="f2">ParseazÄƒ cu fetch (JSON API)</li>
-        <li data-i18n="f3">ValideazÄƒ compania via ANAF</li>
-        <li data-i18n="f4">VerificÄƒ È™i eliminÄƒ job-uri expirate</li>
-        <li data-i18n="f5">SalveazÄƒ Ã®n SOLR pentru peviitor.ro</li>
+        <li data-i18n="f2">Parsează cu fetch (JSON API)</li>
+        <li data-i18n="f3">Validează compania via ANAF</li>
+        <li data-i18n="f4">Verifică și elimină job-uri expirate</li>
+        <li data-i18n="f5">Salvează în SOLR pentru peviitor.ro</li>
       </ul>
     </div>
   </div>
@@ -355,13 +375,13 @@
 
   <div class="btn-wrapper" style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
     <a class="btn" href="https://github.com/TheTatu13/mejix-srl-nodejs-scraper/actions/workflows/job-seeker-ro-spider.yml" target="_blank">
-      <span>&#9654;</span> <span data-i18n="runBtn">RuleazÄƒ Scraper</span>
+      <span>&#9654;</span> <span data-i18n="runBtn">Rulează Scraper</span>
     </a>
     <a class="btn" href="jobs.md" target="_blank">
       <span>&#128196;</span> <span data-i18n="jobsMd">Jobs MD</span>
     </a>
     <a class="btn" href="https://github.com/TheTatu13/mejix-srl-nodejs-scraper" target="_blank">
-      <span>&#128218;</span> <span data-i18n="sourceBtn">Cod sursÄƒ</span>
+      <span>&#128218;</span> <span data-i18n="sourceBtn">Cod sursă</span>
     </a>
   </div>
 
@@ -371,23 +391,23 @@
       <div class="tests-grid">
         <a class="test-card" href="test-results/pre-scrape-unit.html" target="_blank">
           <div class="t-title" data-i18n="testUnit">Unit Tests</div>
-          <div class="t-sub" data-i18n="testUnitSub">Teste izolate, fÄƒrÄƒ reÈ›ea</div>
+          <div class="t-sub" data-i18n="testUnitSub">Teste izolate, fără rețea</div>
         </a>
         <a class="test-card" href="test-results/pre-scrape-integration.html" target="_blank">
           <div class="t-title" data-i18n="testIntegration">Integration Tests</div>
-          <div class="t-sub" data-i18n="testIntegrationSub">ANAF + API Peviitor, Ã®nainte de scrape</div>
+          <div class="t-sub" data-i18n="testIntegrationSub">ANAF + API Peviitor, înainte de scrape</div>
         </a>
         <a class="test-card" href="test-results/post-scrape.html" target="_blank">
           <div class="t-title" data-i18n="testE2E">E2E Tests</div>
-          <div class="t-sub" data-i18n="testE2ESub">Pipeline complet, dupÄƒ scrape</div>
+          <div class="t-sub" data-i18n="testE2ESub">Pipeline complet, după scrape</div>
         </a>
         <a class="test-card" href="test-results/post-scrape-consistency.html" target="_blank">
           <div class="t-title" data-i18n="testConsistency">Consistency Tests</div>
-          <div class="t-sub" data-i18n="testConsistencySub">Structura repo-ului respectÄƒ template-ul</div>
+          <div class="t-sub" data-i18n="testConsistencySub">Structura repo-ului respectă template-ul</div>
         </a>
         <a class="test-card" href="test-results/" target="_blank">
           <div class="t-title" data-i18n="testAll">Toate rapoartele</div>
-          <div class="t-sub" data-i18n="testAllSub">Pagina centralÄƒ cu toate rezultatele</div>
+          <div class="t-sub" data-i18n="testAllSub">Pagina centrală cu toate rezultatele</div>
         </a>
         <a class="test-card" href="https://github.com/TheTatu13/mejix-srl-nodejs-scraper/actions/workflows/job-seeker-ro-spider.yml" target="_blank">
           <div class="t-title" data-i18n="testsWorkflow">Workflow Teste</div>
@@ -398,16 +418,16 @@
   </div>
 
   <div class="card">
-    <div class="card-header" data-i18n="jobsTitle">Locuri de muncÄƒ disponibile</div>
+    <div class="card-header" data-i18n="jobsTitle">Locuri de muncă disponibile</div>
     <div class="card-body" id="jobsContainer">
       <div id="jobsList"></div>
-      <div class="empty-state" id="jobsEmpty" data-i18n="jobsEmpty">Se Ã®ncarcÄƒ...</div>
+      <div class="empty-state" id="jobsEmpty" data-i18n="jobsEmpty">Se încarcă...</div>
     </div>
   </div>
 
   <footer>
     <a href="https://github.com/TheTatu13/mejix-srl-nodejs-scraper" target="_blank">GitHub</a> &middot;
-    <a href="https://github.com/TheTatu13/mejix-srl-nodejs-scraper/blob/main/docs/README.md" target="_blank" data-i18n="docs">DocumentaÈ›ie</a> &middot;
+    <a href="https://github.com/TheTatu13/mejix-srl-nodejs-scraper/blob/main/docs/README.md" target="_blank" data-i18n="docs">Documentație</a> &middot;
     <a href="https://peviitor.ro/" target="_blank">peviitor.ro</a>
   </footer>
 
@@ -432,7 +452,7 @@ async function loadCompanyConfig() {
 
 const i18n = {
   en: {
-    pageTitle: "MEJIX Jobs â€” peviitor.ro",
+    pageTitle: "MEJIX Jobs — peviitor.ro",
     subtitle: "Automated scraper for MEJIX jobs",
     jobsLabel: "Jobs",
     verifiedLabel: "Verified",
@@ -459,30 +479,30 @@ const i18n = {
     testsWorkflow: "Test Workflow", testsWorkflowSub: "Live logs on GitHub Actions",
   },
   ro: {
-    pageTitle: "Locuri de muncÄƒ â€” peviitor.ro",
-    subtitle: "Scraper automat pentru locurile de muncÄƒ MEJIX",
-    jobsLabel: "Locuri de muncÄƒ",
+    pageTitle: "Locuri de muncă — peviitor.ro",
+    subtitle: "Scraper automat pentru locurile de muncă MEJIX",
+    jobsLabel: "Locuri de muncă",
     verifiedLabel: "Verificate",
     aboutTitle: "Despre acest scraper",
-    f1: "Extrage locuri de muncÄƒ de pe MEJIX",
-    f2: "ParseazÄƒ cu fetch (JSON API)",
-    f3: "ValideazÄƒ compania via ANAF",
-    f4: "VerificÄƒ È™i eliminÄƒ locuri de muncÄƒ expirate",
-    f5: "SalveazÄƒ Ã®n SOLR pentru peviitor.ro",
+    f1: "Extrage locuri de muncă de pe MEJIX",
+    f2: "Parsează cu fetch (JSON API)",
+    f3: "Validează compania via ANAF",
+    f4: "Verifică și elimină locuri de muncă expirate",
+    f5: "Salvează în SOLR pentru peviitor.ro",
     companyTitle: "Despre companie",
-    runBtn: "RuleazÄƒ Scraper",
-    jobsTitle: "Locuri de muncÄƒ disponibile",
-    jobsEmpty: "Se Ã®ncarcÄƒ...",
-    docs: "DocumentaÈ›ie",
-    companyLoading: "Se Ã®ncarcÄƒ...",
+    runBtn: "Rulează Scraper",
+    jobsTitle: "Locuri de muncă disponibile",
+    jobsEmpty: "Se încarcă...",
+    docs: "Documentație",
+    companyLoading: "Se încarcă...",
     testResults: "Rezultate Teste",
-    sourceBtn: "Cod sursÄƒ",
+    sourceBtn: "Cod sursă",
     testsTitle: "Rezultate teste",
-    testUnit: "Unit Tests", testUnitSub: "Teste izolate, fÄƒrÄƒ reÈ›ea",
-    testIntegration: "Integration Tests", testIntegrationSub: "ANAF + API Peviitor, Ã®nainte de scrape",
-    testE2E: "E2E Tests", testE2ESub: "Pipeline complet, dupÄƒ scrape",
-    testConsistency: "Consistency Tests", testConsistencySub: "Structura repo-ului respectÄƒ template-ul",
-    testAll: "Toate rapoartele", testAllSub: "Pagina centralÄƒ cu toate rezultatele",
+    testUnit: "Unit Tests", testUnitSub: "Teste izolate, fără rețea",
+    testIntegration: "Integration Tests", testIntegrationSub: "ANAF + API Peviitor, înainte de scrape",
+    testE2E: "E2E Tests", testE2ESub: "Pipeline complet, după scrape",
+    testConsistency: "Consistency Tests", testConsistencySub: "Structura repo-ului respectă template-ul",
+    testAll: "Toate rapoartele", testAllSub: "Pagina centrală cu toate rezultatele",
     testsWorkflow: "Workflow Teste", testsWorkflowSub: "Log-urile live din GitHub Actions",
   }
 };
@@ -493,10 +513,10 @@ function applyDynamicTitle() {
   const lang = document.documentElement.lang;
   const h1 = document.querySelector("h1[data-i18n='pageTitle']");
   if (lang === "ro") {
-    document.title = `Locuri de muncÄƒ de la ${name} â€” peviitor.ro`;
-    if (h1) h1.textContent = `Locuri de muncÄƒ de la ${name}`;
+    document.title = `Locuri de muncă de la ${name} — peviitor.ro`;
+    if (h1) h1.textContent = `Locuri de muncă de la ${name}`;
   } else {
-    document.title = `${name} Jobs â€” peviitor.ro`;
+    document.title = `${name} Jobs — peviitor.ro`;
     if (h1) h1.textContent = `${name} Jobs`;
   }
 }
@@ -532,10 +552,10 @@ async function loadStats() {
         <div class="company-item"><strong>CIF:</strong> ${comp.id}</div>
         <div class="company-item"><strong>Brand:</strong> ${comp.brand}</div>
         <div class="company-item"><strong>Status:</strong> ${comp.status}</div>
-        <div class="company-item"><strong>OraÈ™e:</strong> ${(comp.location || []).join(", ") || "â€”"}</div>
-        <div class="company-item"><strong>Website:</strong> <a href="${(comp.website || [])[0] || "#"}" target="_blank">${(comp.website || [])[0] || "â€”"}</a></div>
-        <div class="company-item"><strong>Career:</strong> <a href="${(comp.career || [])[0] || "#"}" target="_blank">${(comp.career || [])[0] || "â€”"}</a></div>
-        <div class="company-item"><strong>Ultimul scrape:</strong> ${comp.lastScraped || "â€”"}</div>
+        <div class="company-item"><strong>Orașe:</strong> ${(comp.location || []).join(", ") || "—"}</div>
+        <div class="company-item"><strong>Website:</strong> <a href="${(comp.website || [])[0] || "#"}" target="_blank">${(comp.website || [])[0] || "—"}</a></div>
+        <div class="company-item"><strong>Career:</strong> <a href="${(comp.career || [])[0] || "#"}" target="_blank">${(comp.career || [])[0] || "—"}</a></div>
+        <div class="company-item"><strong>Ultimul scrape:</strong> ${comp.lastScraped || "—"}</div>
       `;
 
       window.__companyName = comp.company || COMPANY;
@@ -595,14 +615,14 @@ async function loadStats() {
 
     document.getElementById("jobsCount").textContent = ourCount;
     if (ourCount === 0) {
-      empty.textContent = "Niciun loc de muncÄƒ disponibil.";
+      empty.textContent = "Niciun loc de muncă disponibil.";
     } else {
       empty.style.display = "none";
     }
   } catch (e) {
     console.error("Jobs load failed:", e);
     document.getElementById("jobsCount").textContent = "?";
-    document.getElementById("jobsEmpty").textContent = "Nu s-au putut Ã®ncÄƒrca job-urile.";
+    document.getElementById("jobsEmpty").textContent = "Nu s-au putut încărca job-urile.";
   }
 }
 
