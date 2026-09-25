@@ -7,14 +7,14 @@
 | CIF | 17372688 |
 | Brand | Mejix |
 | Status | activ |
-| Location | Henri Barbusse, 44-46, Municipiul Cluj-Napoca, Cluj |
+| Location | JUD. CLUJ, MUN. CLUJ-NAPOCA, STR. HENRI BARBUSSE, NR.44-46,  BIROU 1, ET.6 |
 | Website | [https://www.mejix.com](https://www.mejix.com) |
 | Careers | [https://www.mejix.com/jobs/](https://www.mejix.com/jobs/) |
-| Last Scraped | 2026-07-26 |
+| Last Scraped | 2026-09-25 |
 
 ## Current Job Listings (5)
 
-_Generated: 2026-07-26T08:30:31.763Z_
+_Generated: 2026-09-25T12:22:22.779Z_
 
 ### Full Stack Developer (AI-Augmented)-Level: Senior
 
