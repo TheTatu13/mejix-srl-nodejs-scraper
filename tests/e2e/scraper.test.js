@@ -8,11 +8,14 @@ import companyConfig from '../../config/company.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '../../.env.local') });
 
-const HAS_SOLR = !!process.env.SOLR_AUTH;
+// Kept for parity with other test files; api.peviitor.ro needs no
+// credential, so this is now opt-in for live network calls, not gated
+// on a secret. Currently unused directly in this file.
+const HAS_SOLR = !!process.env.RUN_LIVE_API_TESTS;
 
 function itIfSolr(name, fn, timeout) {
   if (HAS_SOLR) return it(name, fn, timeout);
-  return it.skip(`${name} (skipped: SOLR_AUTH not set)`, fn, timeout);
+  return it.skip(`${name} (skipped: set RUN_LIVE_API_TESTS=1 to run)`, fn, timeout);
 }
 
 const TEST_CIF = companyConfig.cif;
