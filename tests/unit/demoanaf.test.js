@@ -28,7 +28,14 @@ function errorResponse(status) {
   };
 }
 
-const ANRAF_RECORD = {
+function cuiscanCompanyResponse(data) {
+  return {
+    ok: true,
+    json: async () => data
+  };
+}
+
+const MEJIX_ANAF_RECORD = {
   cui: 17372688,
   name: 'MEJIX SRL',
   address: 'IANCU DE HUNEDOARA, 48, Bucureşti Sectorul 1, Bucureşti',
@@ -40,6 +47,18 @@ const ANRAF_RECORD = {
   vatRegistered: true,
   onrcStatusLabel: 'Funcțiune',
   legalForm: 'SRL'
+};
+
+const CUISCAN_RECORD = {
+  cui: 17372688,
+  denumire: 'MEJIX SRL',
+  adresa: 'IANCU DE HUNEDOARA, 48, Bucureşti Sectorul 1, Bucureşti',
+  codCaen: '6220',
+  activ: true,
+  nrRegCom: 'J2014005735405',
+  platitorTVA: true,
+  stareInregistrare: 'INREGISTRAT din data 14.05.2014',
+  adresaSediu: { strada: 'Bld. Iancu de Hunedoara', numar: '48', localitate: 'Sector 1 Mun. Bucureşti', judet: 'MUNICIPIUL BUCUREŞTI', codPostal: '11745' }
 };
 
 const CACHED_DATA = {
@@ -98,10 +117,16 @@ describe('src/anaf.js', () => {
       expect(results[0]).toHaveProperty('statusLabel', 'Funcțiune');
     });
 
-    it('should throw on HTTP error', async () => {
-      mockFetch.mockResolvedValue(errorResponse(500));
+    it('should fallback to CUIFirma when ANAF search fails', async () => {
+      mockFetch
+        .mockResolvedValueOnce(errorResponse(500))
+        .mockResolvedValueOnce({ ok: true, json: async () => ({ results: [{ cui: 17372688, name: 'MEJIX SRL', is_active: true }] }) });
 
-      await expect(anaf.searchCompany('MEJIX')).rejects.toThrow('ANAF search error: 500');
+      const results = await anaf.searchCompany('MEJIX');
+
+      expect(Array.isArray(results)).toBe(true);
+      expect(results.length).toBeGreaterThan(0);
+      expect(results[0].cui).toBe('17372688');
     });
 
     it('should encode brand name in URL', async () => {
@@ -118,7 +143,7 @@ describe('src/anaf.js', () => {
 
   describe('getCompanyFromANAF', () => {
     it('should return company data for valid CIF', async () => {
-      mockFetch.mockResolvedValue(anafCompanyResponse(ANRAF_RECORD));
+      mockFetch.mockResolvedValue(anafCompanyResponse(MEJIX_ANAF_RECORD));
 
       const data = await anaf.getCompanyFromANAF('17372688');
 
@@ -129,30 +154,33 @@ describe('src/anaf.js', () => {
       expect(data).toHaveProperty('registrationNumber');
     });
 
-    it('should retry on HTTP error then succeed', async () => {
+    it('should fallback to CUIScan when ANAF fails', async () => {
       mockFetch
         .mockResolvedValueOnce(errorResponse(500))
-        .mockResolvedValueOnce(anafCompanyResponse(ANRAF_RECORD));
+        .mockResolvedValueOnce(cuiscanCompanyResponse(CUISCAN_RECORD));
 
       const data = await anaf.getCompanyFromANAF('17372688');
 
       expect(data).toBeDefined();
       expect(data.cui).toBe(17372688);
+      expect(data.name).toBe('MEJIX SRL');
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
-    it('should throw after exhausting retries', async () => {
+    it('should throw when both ANAF and CUIScan fail', async () => {
       mockFetch.mockResolvedValue(errorResponse(500));
 
       await expect(anaf.getCompanyFromANAF('17372688')).rejects.toThrow();
-      expect(mockFetch).toHaveBeenCalledTimes(3);
+      expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
     it('should handle API-level error response', async () => {
-      mockFetch.mockResolvedValue({
-        ok: true,
-        json: async () => ({ success: false, error: { message: 'Company not found' } })
-      });
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({ success: false, error: { message: 'Company not found' } })
+        })
+        .mockResolvedValueOnce(errorResponse(500));
 
       await expect(anaf.getCompanyFromANAF('00000000')).rejects.toThrow();
     });
@@ -167,7 +195,7 @@ describe('src/anaf.js', () => {
 
   describe('getCompanyFromANAFWithFallback', () => {
     it('should return fresh data when API works', async () => {
-      mockFetch.mockResolvedValue(anafCompanyResponse(ANRAF_RECORD));
+      mockFetch.mockResolvedValue(anafCompanyResponse(MEJIX_ANAF_RECORD));
 
       const data = await anaf.getCompanyFromANAFWithFallback('17372688');
 
