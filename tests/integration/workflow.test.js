@@ -21,6 +21,10 @@ function itIfSolr(name, fn, timeout) {
 const COMPANY_CIF = companyConfig.cif;
 const COMPANY_NAME = companyConfig.legalName;
 const COMPANY_BRAND = companyConfig.brand;
+// peViitor's own SOLR-backed API returns the CIF zero-padded to 8 digits
+// (see solr.js padCif()-equivalent behavior); company config stores it
+// unpadded, so compare with this normalizer instead of exact equality.
+const cifMatches = (value) => String(value).replace(/^0+/, '') === COMPANY_CIF.replace(/^0+/, '');
 
 describe('Integration: API Workflow', () => {
 
@@ -99,7 +103,7 @@ describe('Integration: API Workflow', () => {
       const doc = await solr.getCompanyByCif(COMPANY_CIF);
 
       expect(doc).not.toBeNull();
-      expect(doc.id).toBe(COMPANY_CIF);
+      expect(cifMatches(doc.id)).toBe(true);
       expect(doc.company).toBe(COMPANY_NAME);
       expect(doc.brand).toBe(COMPANY_BRAND);
       expect(doc.status).toBe('activ');
@@ -110,7 +114,8 @@ describe('Integration: API Workflow', () => {
     itIfSolr('should have required company model fields', async () => {
       const doc = await solr.getCompanyByCif(COMPANY_CIF);
 
-      expect(doc).toHaveProperty('id', COMPANY_CIF);
+      expect(doc).toHaveProperty('id');
+      expect(cifMatches(doc.id)).toBe(true);
       expect(doc).toHaveProperty('company');
       expect(doc).toHaveProperty('brand', COMPANY_BRAND);
       expect(doc).toHaveProperty('status');
@@ -158,7 +163,8 @@ describe('Integration: API Workflow', () => {
       expect(job).toHaveProperty('url');
       expect(job).toHaveProperty('title');
       expect(job).toHaveProperty('company', COMPANY_NAME);
-      expect(job).toHaveProperty('cif', COMPANY_CIF);
+      expect(job).toHaveProperty('cif');
+      expect(cifMatches(job.cif)).toBe(true);
       expect(job).toHaveProperty('status');
       expect(job).toHaveProperty('location');
     }, 15000);
@@ -208,7 +214,7 @@ describe('Integration: API Workflow', () => {
       const solrObj = await import('../../solr.js');
       const doc = await solrObj.getCompanyByCif(COMPANY_CIF);
       expect(doc).not.toBeNull();
-      expect(doc.id).toBe(COMPANY_CIF);
+      expect(cifMatches(doc.id)).toBe(true);
       expect(doc.company).toBe(COMPANY_NAME);
     }, 30000);
 
