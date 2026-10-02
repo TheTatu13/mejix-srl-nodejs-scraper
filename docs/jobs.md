@@ -10,11 +10,11 @@
 | Location | JUD. CLUJ, MUN. CLUJ-NAPOCA, STR. HENRI BARBUSSE, NR.44-46,  BIROU 1, ET.6 |
 | Website | [https://www.mejix.com](https://www.mejix.com) |
 | Careers | [https://www.mejix.com/jobs/](https://www.mejix.com/jobs/) |
-| Last Scraped | 2026-09-25 |
+| Last Scraped | 2026-10-02 |
 
 ## Current Job Listings (5)
 
-_Generated: 2026-09-25T19:51:06.179Z_
+_Generated: 2026-10-02T23:35:09.032Z_
 
 ### Full Stack Developer (AI-Augmented)-Level: Senior
 
