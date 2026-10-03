@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2026-06-17
 
 ### Added
-- Initial release — derived from [EPAM template](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper) (v1.4.2)
+- Initial release — derived from [EPAM template](https://github.com/peviitor-scrapers/epam-systems-international-srl-nodejs-scraper) (v1.4.2)
 - HTML scraping for MEJIX SRL via `https://www.mejix.com/jobs/` using cheerio (no API, single-page)
 - Selector `#open-positions a[href^='/jobs/']` with title extraction from `<h3>`
 - Default location `Cluj-Napoca` (MEJIX HQ), default workmode `hybrid`
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `docs/jobs.md` generation
   - 4-layer test suite (unit, integration, e2e, consistency)
   - Daily scheduled scraping via GitHub Actions
-  - GitHub Pages dashboard at https://sebiboga.github.io/mejix-srl-nodejs-scraper/
+  - GitHub Pages dashboard at https://peviitor-scrapers.github.io/mejix-srl-nodejs-scraper/
 
 ## License
 

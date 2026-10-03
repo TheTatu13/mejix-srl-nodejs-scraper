@@ -136,7 +136,7 @@ jobs:
         # Non-blocking: same live demoanaf.ro dependency (anaf.js's
         # searchCompany, returning HTTP 402) that stopped the daily scrape
         # workflow from ever running "Run scraper" -- see
-        # job-seeker-ro-spider.yml and TheTatu13/sennder-bucharest-srl-nodejs-scraper.
+        # job-seeker-ro-spider.yml and peviitor-scrapers/sennder-bucharest-srl-nodejs-scraper.
         continue-on-error: true
         run: |
           npm run test:unit

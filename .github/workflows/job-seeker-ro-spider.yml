@@ -33,7 +33,7 @@ jobs:
         # been returning HTTP 402 -- without continue-on-error, that alone
         # stopped "Run scraper" below from ever executing, for days
         # (2026-09-2x). Same root cause and fix as
-        # TheTatu13/sennder-bucharest-srl-nodejs-scraper.
+        # peviitor-scrapers/sennder-bucharest-srl-nodejs-scraper.
         continue-on-error: true
         run: |
           npm run test:unit

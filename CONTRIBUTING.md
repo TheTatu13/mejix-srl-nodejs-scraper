@@ -4,13 +4,13 @@ Thank you for your interest in contributing!
 
 ## 🌱 This Repo Is a Derived Scraper
 
-This repo is **derived from** [job_seeker_ro_spider](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper) (the EPAM template — the reference implementation for the peviitor.ro ecosystem).
+This repo is **derived from** [job_seeker_ro_spider](https://github.com/peviitor-scrapers/epam-systems-international-srl-nodejs-scraper) (the EPAM template — the reference implementation for the peviitor.ro ecosystem).
 
 **What that means for contributors:**
 
 - **Bug fixes specific to MEJIX scraping** (the HTML selector, workmode detection, Cluj-Napoca defaults, robots.txt handling) belong here.
 - **Structural improvements** (pipeline architecture, test patterns, caching strategy, config layout, CI workflows) should be proposed in the **EPAM template repo** instead — so every derived scraper benefits from the change.
-- **Looking to create a scraper for a different company?** Don't fork this — fork [the template](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper) and follow its [CONTRIBUTING.md](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper/blob/main/CONTRIBUTING.md).
+- **Looking to create a scraper for a different company?** Don't fork this — fork [the template](https://github.com/peviitor-scrapers/epam-systems-international-srl-nodejs-scraper) and follow its [CONTRIBUTING.md](https://github.com/peviitor-scrapers/epam-systems-international-srl-nodejs-scraper/blob/main/CONTRIBUTING.md).
 
 ## Code Style
 
@@ -23,7 +23,7 @@ This repo is **derived from** [job_seeker_ro_spider](https://github.com/sebiboga
 ## Development Setup
 
 ```bash
-git clone https://github.com/sebiboga/mejix-srl-nodejs-scraper.git
+git clone https://github.com/peviitor-scrapers/mejix-srl-nodejs-scraper.git
 cd mejix-srl-nodejs-scraper
 npm install
 npm test
@@ -33,7 +33,7 @@ npm test
 
 ## Reporting Issues
 
-Open a [GitHub Issue](https://github.com/sebiboga/mejix-srl-nodejs-scraper/issues) with:
+Open a [GitHub Issue](https://github.com/peviitor-scrapers/mejix-srl-nodejs-scraper/issues) with:
 - Clear description of the problem
 - Steps to reproduce
 - Expected vs actual behavior
