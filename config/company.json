@@ -7,5 +7,5 @@
   "apiBase": "https://www.mejix.com",
   "apiCountryId": "",
   "defaultLocation": "Cluj-Napoca",
-  "scraperFile": "https://raw.githubusercontent.com/sebiboga/mejix-srl-nodejs-scraper/main/.github/workflows/job-seeker-ro-spider.yml"
+  "scraperFile": "https://raw.githubusercontent.com/TheTatu13/mejix-srl-nodejs-scraper/main/.github/workflows/job-seeker-ro-spider.yml"
 }
