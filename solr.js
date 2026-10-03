@@ -11,6 +11,7 @@
 // to their imports.
 
 import fetch from "node-fetch";
+import { isDryRun } from "./src/premium.js";
 
 const API_BASE_URL = "https://api.peviitor.ro/v1";
 const TIMEOUT = 10000;
@@ -88,6 +89,7 @@ export async function getCompanyByCif(cif) {
 }
 
 export async function upsertCompany(companyDoc) {
+  if (isDryRun()) { console.log('[dry-run] upsertCompany skipped'); return; }
   const url = `${API_BASE_URL}/firme/company/add/`;
   const res = await fetch(url, {
     method: "PUT",
@@ -124,8 +126,9 @@ export async function querySOLR(cif) {
 }
 
 export async function upsertJobs(jobs) {
+  if (isDryRun()) { console.log('[dry-run] upsertJobs skipped'); return; }
   const url = `${API_BASE_URL}/scraper/jobs/upload/`;
-  const paddedJobs = jobs.map((job) => ({ ...job, cif: padCif(job.cif) }));
+  const paddedJobs = jobs.map(({ _version_, ...job }) => ({ ...job, cif: padCif(job.cif) }));
 
   const res = await fetchWithRetry(url, {
     method: "POST",
@@ -146,6 +149,7 @@ export async function upsertJobs(jobs) {
 // --- Delete -----------------------------------------------------------------
 
 export async function deleteJobsByCIF(cif) {
+  if (isDryRun()) { console.log('[dry-run] deleteJobsByCIF skipped'); return; }
   const url = `${API_BASE_URL}/scraper/jobs/delete/`;
   const res = await fetch(url, {
     method: "DELETE",
@@ -169,6 +173,7 @@ export async function deleteJobsByCIF(cif) {
 }
 
 export async function deleteJobByUrl(url) {
+  if (isDryRun()) { console.log('[dry-run] deleteJobByUrl skipped'); return; }
   const apiUrl = `${API_BASE_URL}/scraper/jobs/delete/`;
   const res = await fetch(apiUrl, {
     method: "DELETE",

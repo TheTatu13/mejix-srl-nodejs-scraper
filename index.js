@@ -12,6 +12,7 @@ import { fileURLToPath } from "url";
 import { validateAndGetCompany } from "./company.js";
 import { querySOLR, deleteJobByUrl, upsertJobs, upsertCompany } from "./solr.js";
 import { generateJobsMarkdown } from "./src/markdown-generator.js";
+import { assertCanary } from "./src/premium.js";
 import companyConfig from "./config/company.js";
 
 // ============================================================================
@@ -273,6 +274,7 @@ async function main() {
     // Step 3: Scrape all jobs from MEJIX Careers API
     const rawJobs = await scrapeAllListings(testOnlyOnePage);
     const scrapedCount = rawJobs.length;
+    assertCanary({ scraped: scrapedCount, existing: existingCount, source: "mejix.com careers page" });
     console.log(`📊 Jobs scraped from MEJIX Careers website: ${scrapedCount}`);
 
     // Step 4: Map raw jobs to Solr model with CIF and company name
